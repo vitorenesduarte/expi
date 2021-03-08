@@ -29,6 +29,8 @@ a <: b == a
 MT == [type |-> STRING, bal |-> Int,
        mbal |-> Int, acc |-> STRING,
        val |-> Int, mval |-> Int]
+AsMTSet(a) == a <: {MT}
+
 
 (*
 Acceptor == {"a1", "a2", "a3"}
@@ -135,13 +137,13 @@ votes == [a \in Acceptor |->
 Init == /\ maxBal = [a \in Acceptor |-> -1]
         /\ maxVBal = [a \in Acceptor |-> -1]
         /\ maxVal = [a \in Acceptor |-> None]
-        /\ msgs = {} <: {MT}
+        /\ msgs = AsMTSet({})
 
 (***************************************************************************)
 (* The actions.  We begin with the subaction (an action that will be used  *)
 (* to define the actions that make up the next-state action.               *)
 (***************************************************************************)
-Send(m) == /\ msgs' = msgs \cup {m <: MT}
+Send(m) == /\ msgs' = msgs \cup AsMTSet({m})
 
 
 (***************************************************************************)
